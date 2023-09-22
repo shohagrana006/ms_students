@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -79,6 +80,32 @@ class GeneralController extends Controller
         } else{
             return self::errorWithResponse('Pin already exist');
         }
+    }
+
+
+    public function allUser(){
+        return self::successWithResponse('All user get successfully',200, User::all());
+    }
+    public function makeAdmin(Request $request){
+        $validation = Validator::make($request->all(), [
+            'login_id' => 'required',
+            'type' => 'required|in:1,2',
+        ]);
+
+        if ($validation->fails()) {
+            return self::errorWithResponse('validation failed', 422, $validation->errors());
+        }
+
+        $user = User::where('login_id', $request->login_id)->first();
+        if (!$user) {
+            return self::errorWithResponse('user not found', 404);
+        }
+
+        $user->user_type = $request->type == 1 ? 'sub_admin' : 'user_admin';
+        if($user->save()){
+            return self::successWithResponse('Admin create successfully');
+        }
+
     }
 
 

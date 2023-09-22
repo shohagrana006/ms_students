@@ -53,6 +53,7 @@ Route::middleware('auth:user-api')->group(function(){
     Route::post('/change/passowrd', [GeneralController::class, 'changePassword']);
     Route::post('/change/pin', [GeneralController::class, 'changePin']);
     Route::post('/set/pin', [GeneralController::class, 'setPin']);
+    Route::get('/all/user', [GeneralController::class, 'allUser']);
 
     Route::post('/withdraw/balance', [WithdrawController::class, 'withdrawBalance']);
     Route::get('/commision/ledger', [WithdrawController::class, 'commisionLedger']);
@@ -64,23 +65,6 @@ Route::middleware('auth:user-api')->group(function(){
 
 
 
-//Student ref api start
-Route::post('/student/ref', [StudentApproveController::class, 'index']);
-Route::post('/student/ref/approve/{id}', [StudentApproveController::class, 'approveStudent']);
-Route::get('/student/ref/data/{login_id}', [StudentApproveController::class, 'getRefData']);
-//Student ref api end
-
-
-
-//Designation Api Start
-
-Route::get('/designation', [DesignationController::class, 'index']);
-Route::get('/designation/{id}', [DesignationController::class, 'show']);
-Route::post('/designation', [DesignationController::class, 'store']);
-Route::post('/designation/{id}', [DesignationController::class, 'edit']);
-Route::delete('/designation/{id}', [DesignationController::class, 'destroy']);
-
-//Designation Api End
 
 
 
@@ -107,10 +91,26 @@ Route::middleware('auth:user-api')->group(function(){
 
     Route::get('/sub-admin/list', [BalanceController::class, 'subAdminList']);
 
+    //Student ref api start
+    Route::post('/student/ref', [StudentApproveController::class, 'index']);
+    Route::post('/student/ref/approve/{id}', [StudentApproveController::class, 'approveStudent']);
+    Route::get('/student/ref/data/{login_id}', [StudentApproveController::class, 'getRefData']);
+    //Student ref api end
+
+    //Designation Api Start
+    Route::get('/designation', [DesignationController::class, 'index']);
+    Route::get('/designation/{id}', [DesignationController::class, 'show']);
+    Route::post('/designation', [DesignationController::class, 'store']);
+    Route::post('/designation/{id}', [DesignationController::class, 'edit']);
+    Route::delete('/designation/{id}', [DesignationController::class, 'destroy']);
+    //Designation Api End
+
 
     Route::middleware('super_admin')->group(function(){
         Route::post('/balance/send', [BalanceController::class, 'BalanceSend']);
         Route::post('/withdraw/request', [BalanceController::class, 'withdrawDone']);
+        Route::post('/make/admin', [GeneralController::class, 'makeAdmin']);
+
 
     });
 
