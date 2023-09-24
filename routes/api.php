@@ -54,6 +54,7 @@ Route::middleware('auth:user-api')->group(function(){
     Route::post('/change/pin', [GeneralController::class, 'changePin']);
     Route::post('/set/pin', [GeneralController::class, 'setPin']);
     Route::get('/all/user', [GeneralController::class, 'allUser']);
+    Route::get('/user/{id}', [GeneralController::class, 'userId']);
 
     Route::post('/withdraw/balance', [WithdrawController::class, 'withdrawBalance']);
     Route::get('/commision/ledger', [WithdrawController::class, 'commisionLedger']);

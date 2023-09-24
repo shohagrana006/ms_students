@@ -107,6 +107,15 @@ class GeneralController extends Controller
         }
 
     }
+    public function userId($id){
+
+        $user = User::where('id', $id)->first();
+        if (!$user) {
+            return self::errorWithResponse('user not found', 404);
+        }
+        return self::successWithResponse('User get successfully',200, $user);
+
+    }
 
 
 
