@@ -137,7 +137,7 @@ class StudentApproveController extends Controller
 
 
         
-        if (User::where('login_id',$student_refer->placement_login_id)->first()->balance < 6900 ) {
+        if (User::where('login_id',$student_refer->net_office)->first()->balance < 6900 ) {
             
             return response()->json([
                 'success' => false,
@@ -224,7 +224,11 @@ class StudentApproveController extends Controller
 
         $ref_user->save();
 
-   
+        $user = User::where('login_id', $student_refer->net_office)->first();
+        $user->balance -= env('GREEN_ID_CHARGE');
+        $user->save();
+
+
         return response()->json([
             'success' => true,
             'message' => 'Student approved successfully',
